@@ -95,10 +95,8 @@
 
 ## KUBECTL COMMANDS
 
-- **kubectl get** = get information about the clusters; below are a couple of examples
-  - **nodes** = shows info about the nodes inside the cluster 
-  - **pod** = shows info about the PODs
-  - **servies** = shows info about the services
+- **kubectl get \<component\>** = get information about the cluster components
+  - **-o wide** = shows more info about the components
 - **kubectl create \<component\> \<name\> \<params\>** = create a component in the cluster
   - **--image=\<image\>** = tells which image to start the deployment with
 - **kubectl edit \<component\> \<name\> \<params\>** = show and edit config files
@@ -111,6 +109,8 @@
   - **-f \<file_path\>** = applies a config file
 
 ## YAML CONFIG FILES
+
+### CONFIG FILE STRUCTURE
 
 - You can use the **kubectl apply** command to apply these config files
 - You should store these files where you code is stored
@@ -144,7 +144,54 @@ spec: ...
         - containerPort: <port_number>
 ```
 
-- Below is an example for a Deployment config file
+### SELECTORS & LABELS
+
+- Deployments are linked to their PODs via labels and selectors
+``` yaml
+kind: Deployment
+spec:
+  # Using matchLabels it links all the matched labels to itself
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx # Name of the POD
+```
+
+- Selectors for services
+``` yaml
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  # Here the nginx Deployment and PODs are linked to the Service
+  selector:
+    app: nginx
+```
+
+### SERVICE PORTS
+
+- Services redirect external connections to one of their associated PODs
+``` yaml
+# Service config
+ports:
+- protocol: TCP
+  port: 80 # External cnnection will be received on this port and redirected to the targetPort
+  targetPort: 8080 # This needs to match the POD's containerPort
+
+# POD config
+spec:
+  containers:
+  - name: <container_name>
+    image: <image>
+    ports:
+    - containerPort: 8080
+```
+
+### EXAMPLE
+
 ``` yaml
 # apiVersion specifies the Kubernetes API version this object belongs to.
 # For Deployments, it's typically 'apps/v1'.
