@@ -88,6 +88,7 @@
   - **--vm-driver=\<vm_driver\>** = sets which VM to start on (use docker for it)
 - **minikube stop** = stops the minkube cluster but saves the data to a docker volume
 - **minikube delete** = removes all of the stored data about the cluster and its volume
+- **minikube service \<external_service_name\>** = assigns a public IP to the external service
 
 # KUBECTL
 
@@ -171,9 +172,9 @@ spec:
     app: nginx
 ```
 
-### SERVICE PORTS
+### SERVICE CONFIG
 
-- Services redirect external connections to one of their associated PODs
+- Services redirect connections to one of their associated PODs
 ``` yaml
 # Service config
 ports:
@@ -190,55 +191,60 @@ spec:
     - containerPort: 8080
 ```
 
-### EXAMPLE
+- External service config needs a **type** key in its **spec** section and a **nodePort** for external access
+``` yaml
+spec:
+  type: LoadBalancer # LoadBalancer = external service
+ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    nodePort: <number between 30K-32K>
+```
+
+### SECRET CONFIG
+
+- Secrets should already be applied to the cluster if we want to reference it somewhere
+- These should never be pushed to a repository
 
 ``` yaml
-# apiVersion specifies the Kubernetes API version this object belongs to.
-# For Deployments, it's typically 'apps/v1'.
-apiVersion: apps/v1
-# kind specifies the type of Kubernetes object you are creating.
-# In this case, it's a 'Deployment'.
-kind: Deployment
+apiVersion: v1
+kind: Secret
 metadata:
-  # name is a unique identifier for your Deployment within its namespace.
-  name: my-web-app-deployment
-  # labels are key-value pairs used to organize and select Kubernetes objects.
-  # These labels apply to the Deployment itself.
-  labels:
-    app: my-web-app
-    environment: development
+  name: <secret_name>
+type: Opaque
+# Values should be base64 encoded
+data:
+  <key>: <value>
+```
 
-spec:
-  # replicas specifies the desired number of Pod replicas (instances) for your application.
-  # The Deployment controller will ensure this many Pods are running.
-  replicas: 3
-  # selector defines how the Deployment finds which Pods it manages.
-  # It must match the labels defined in the Pod template.
-  selector:
-    matchLabels:
-      app: my-web-app # This must match the Pod's labels below
-  # template describes the Pods that the Deployment will create and manage.
-  # This is essentially a Pod template.
-  template:
-    metadata:
-      # labels here apply to the Pods created by this Deployment.
-      # These labels are crucial for the Deployment's selector to work.
-      labels:
-        app: my-web-app # This label is matched by the Deployment's selector
-    spec:
-      # containers defines the container(s) that will run inside each Pod.
-      containers:
-      - name: my-web-app-container # Name of the container (unique within the Pod)
-        image: nginx:latest       # Docker image to use for the container
-        ports:
-        - containerPort: 80       # The port the container listens on
-        resources:
-          # Define resource requests and limits for the container.
-          # Requests are guaranteed, limits are the maximum allowed.
-          requests:
-            memory: "64Mi"
-            cpu: "250m" # 250 milliCPU = 0.25 CPU core
-          limits:
-            memory: "128Mi"
-            cpu: "500m" # 500 milliCPU = 0.5 CPU core
+- Below is how to reference a secret in a config yaml file
+``` yaml
+valueFrom:
+  secretKeyRef:
+    name: <secret_name>
+    key: <key_from_secret_data_section>
+```
+
+### CONFIGMAP
+
+- Very similar to a secret just not encoded
+- External configuration
+- More components can use it
+
+``` yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: <name>
+data:
+  <key>: <value>
+```
+
+- Below is how to reference a ConfigMap in a config yaml file
+``` yaml
+valueFrom:
+  configMapKeyRef:
+    name: <configMap_name>
+    key: <key_from_configMap_data_section>
 ```
