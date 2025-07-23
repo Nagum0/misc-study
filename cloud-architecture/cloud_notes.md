@@ -88,6 +88,49 @@
 
 ### Challenge 2: App/service and service/service communication
 
+- Lack of service governance leads to Death Star anti-pattern
+
+### Service orchestration
+
+- Client applications should call only the routing service. Depending on the use case and context of the request coming from the client applications, the routing service calls one or more common services and application services, in a predefined order
+- Manage and define policies to orchastrate the services
+
+### Service mesh and sidecar
+
+- Control Plane manages the defined policies
+- Used by Kubernetes
+
 ## 5 principles for cloud-native architecture—what it is and how to master it
 
 - [Link to article](https://cloud.google.com/blog/products/application-development/5-principles-for-cloud-native-architecture-what-it-is-and-how-to-master-it)
+
+### Principle 1: Design for automation
+
+- Infrastructure: Automate the creation of the infrastructure, together with updates to it
+- Continuous Integration/Continuous Delivery: Automate the build, testing, and deployment of the packages that make up the system
+- Scale up and scale down: Unless your system load almost never changes, you should automate the scale up of the system in response to increases in load, and scale down in response to sustained drops in load
+- Monitoring and automated recovery: You should bake monitoring and logging into your cloud-native systems from inception
+
+### Principle 2: Be smart with state
+
+- State is the hardest part to handle about cloud-native design
+- Scale: To scale up, just add more copies. To scale down, instruct instances to terminate once they have completed their current task
+- Repair: To 'repair' a failed instance of a component, simply terminate it as gracefully as possible and spin up a replacement
+- Roll-back: If you have a bad deployment, stateless components are much easier to roll back, since you can terminate them and launch instances of the old version instead
+- Load-Balance across: When components are stateless, load balancing is much simpler since any instance can handle any request
+
+### Principle 3: Favor managed services
+
+- Cloud is more than just infrastructure. Most cloud providers offer a rich set of managed services, providing all sorts of functionality that relieve you of the headache of managing the backend software or infrastructure
+- Managed open source or open source-compatible services: Services that are managed open source
+- Managed services with high operational savings 
+- Everything else: Then there are the hard cases, where there is no easy migration path off of the service, and it presents a less obvious operational benefit. You’ll need to examine these on a case-by-case basis, considering things like the strategic significance of the service, the operational overhead of running it yourself, and the effort required to migrate away
+
+### Principle 4: Practice defense in depth
+
+- Put authentication between each component
+- Cloud-native architectures should extend this idea beyond authentication to include things like rate limiting and script injection
+
+### Principle 5: Always be architecting
+
+- Always seek to refine, simplify and improve the architecture of the system
