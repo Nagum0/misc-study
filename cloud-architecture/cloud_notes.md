@@ -82,9 +82,12 @@
 
 ### Common services
 
-- The common functionality are split into services which are running indenependelty and the client application just calls to these when it needs these functionalities
+- The common functionality are split into services which are running indenependelty and the client application just calls to these when it needs those functionalities
 - These common services could be hosted on cloud platforms
 - Common services come with their own issues and challanges
 
 ### Challenge 2: App/service and service/service communication
 
+## 5 principles for cloud-native architecture—what it is and how to master it
+
+- [Link to article](https://cloud.google.com/blog/products/application-development/5-principles-for-cloud-native-architecture-what-it-is-and-how-to-master-it)
