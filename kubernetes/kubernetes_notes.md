@@ -89,6 +89,7 @@
 - **minikube stop** = stops the minkube cluster but saves the data to a docker volume
 - **minikube delete** = removes all of the stored data about the cluster and its volume
 - **minikube service \<external_service_name\>** = assigns a public IP to the external service
+- **minikube tunnel** = makes extenral (LoadBalancer) services accessible from the host machine
 
 # KUBECTL
 

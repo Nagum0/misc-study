@@ -53,11 +53,10 @@ func postHandler(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	defer req.Body.Close()
-	fmt.Println(string(reqBodyBytes))
 
 	var message Message
 	if err := yaml.Unmarshal(reqBodyBytes, &message); err != nil {
-		http.Error(res, "Corrupted yaml format", http.StatusBadRequest)
+		http.Error(res, fmt.Sprintf("Corrupted yaml format: %v", err.Error()), http.StatusBadRequest)
 		return
 	}
 
