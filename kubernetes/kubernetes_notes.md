@@ -292,3 +292,61 @@ spec:
 
 # HELM
 
+- Package manager for K8s
+
+## HELM CHART
+
+- A bundle of yaml configuration files
+- You can make your own Helm Charts with Helm
+
+## TEMPLATING ENGINE
+
+- Create template files for you config files
+- There are 2 parts
+  1. Fix values
+  2. Placeholder values
+
+``` yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.name }}
+spec:
+  containers:
+  - name: {{ .Values.container.name }}
+    image: {{ .Values.container.image }}
+    port: {{ .Values.container.port }}
+```
+
+- The placeholder values come from an additional yaml file called values.yaml
+``` yaml
+name: <name>
+container:
+  name: <containter_name>
+  image: <image_name>
+  port: <port_num>
+```
+
+## HELM CHART STRUCTURE
+
+``` txt
+mychart/        -> name of the chart
+  Chart.yaml    -> chart metadata
+  values.yaml   -> default values config file
+  charts/       -> chart dependencies
+  templates/    -> the actual template files
+```
+
+### Chart.yaml
+
+``` yaml
+apiVersion: v2
+name: mysql-chart
+version: "1.0"
+description: A basic mysql db chart
+```
+
+## HELM COMMANDS
+
+- **helm install \<args\> \<chart_name\>** = applies the yaml files from the chart onto kubernetes
+  - **--values=\<values_config_file_path\>** = applies a different set of values for the templates
