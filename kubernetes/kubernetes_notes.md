@@ -78,6 +78,22 @@
   3. **Controller** Manager = detects cluster state changes and tries to recover the cluster state
   4. **etcd** = every cluster change, update is logged and saved into this storage (its a key value store); this is how the scheduler and controller manager know about the state of the cluster
 
+### NAMESPACES
+
+- Used for separating applications into logical parts
+- Helps when multiple teams work on the same cluster
+- Accessing limits for teams
+- You can add which namespace this belongs to in a config file (in metadata) or after the apply command
+``` yaml
+metadata:
+  namespace: <namespace_name>
+```
+
+### INGRESS
+
+- Works like a DNS
+- Redirects external calls to internal services
+
 # MINIKUBE
 
 - A local kubernetes cluster for testing and development
@@ -109,10 +125,13 @@
   - **-it /bin/\<shell\>** = runs an interactive terminal inside of the POD
 - **kubectl apply** = executes a kubernetes commands and configurations
   - **-f \<file_path\>** = applies a config file
+  - **--namespace=\<namespace_name\>** = apply the config in a specific namespace
+- **kubectl api-resources** = shows info about resources
+  - **--namespaced=\<bool\>** = only shows the namespaced or not namespaced resources
 
-## YAML CONFIG FILES
+# YAML CONFIG FILES
 
-### CONFIG FILE STRUCTURE
+## CONFIG FILE STRUCTURE
 
 - You can use the **kubectl apply** command to apply these config files
 - You should store these files where you code is stored
@@ -249,4 +268,27 @@ valueFrom:
     name: <configMap_name>
     key: <key_from_configMap_data_section>
 ```
+
+### INGRESS
+
+- Everything is defined in the rules section
+- When a user enters the host address into the browser or any accessing tool, 
+  Ingress will redirect the connection to the internal service
+
+``` yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: <ingress_name>
+spec:
+  rules:
+  - host: <host_name.com>
+    http:
+      paths:
+      - backend:
+          serviceName: <internal_service_name>
+          servicePort: 8080
+```
+
+# HELM
 

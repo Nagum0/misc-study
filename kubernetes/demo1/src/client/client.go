@@ -21,7 +21,7 @@ func main() {
 	}
 	body := bytes.NewReader(yamlContent)
 
-	res, err := http.Post("http://192.168.49.2:30000/post", "application/yaml", body)
+	res, err := http.Post("http://localhost:8080/post", "application/yaml", body)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		os.Exit(1)
