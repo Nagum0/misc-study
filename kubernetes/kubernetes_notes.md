@@ -212,6 +212,7 @@ spec:
 ```
 
 - External service config needs a **type** key in its **spec** section and a **nodePort** for external access
+- **LoadBalancer type** = the cloud environment does the forwarding and you can access the service on the node's public IP and the specified port number
 ``` yaml
 spec:
   type: LoadBalancer # LoadBalancer = external service
@@ -219,7 +220,16 @@ ports:
   - protocol: TCP
     port: 80
     targetPort: 8080
-    nodePort: <number between 30K-32K>
+```
+- **NodePort type** = with this you set a specific static node port for accessing the service
+``` yaml
+spec:
+  type: NodePort
+ports:
+- protocol: TCP
+  port: 80
+  targetPort: 8080
+  nodePort: <number between 30K-32K>
 ```
 
 ### SECRET CONFIG
