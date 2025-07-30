@@ -1,0 +1,4 @@
+apiVersion: v1
+name: mysql-chart
+version: "1.0"
+description: Simple mysql database

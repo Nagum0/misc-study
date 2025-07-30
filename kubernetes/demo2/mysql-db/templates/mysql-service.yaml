@@ -5,7 +5,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: mysql
+    app: mysql-db
   ports:
   - protocol: TCP
     port: 3306
