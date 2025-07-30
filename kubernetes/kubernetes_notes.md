@@ -308,6 +308,7 @@ spec:
 
 - A bundle of yaml configuration files
 - You can make your own Helm Charts with Helm
+- You can bundle the helm charts into *umbrella chart*
 
 ## TEMPLATING ENGINE
 
@@ -356,7 +357,37 @@ version: "1.0"
 description: A basic mysql db chart
 ```
 
+## UMBRELLA CHART / INTEGRATION CHART
+
+- Needs a requirements.yaml config file in which you specify other helm charts as dependencies
+- This enables better and more streamlined deployments of multiple microservices which each have their own helm chart
+
+``` yaml
+dependencies:
+- name: <helm_chart_name>
+  repository: <url_to_helm_chart_repo>
+  version: <helm_chart_version_number>
+```
+
+- You can also set values in the umbrella charts values.yaml for the dependencies
+
+``` yaml
+<helm_chart_name>:
+  <key>: <value>
+```
+
 ## HELM COMMANDS
 
 - **helm install \<args\> \<chart_name\>** = applies the yaml files from the chart onto kubernetes
   - **--values=\<values_config_file_path\>** = applies a different set of values for the templates
+  - **--set \<\<object_name\>.value_name\>=\<\value\>** = overwrites default value.yaml settings
+- **helm uninstall \<args\> \<chart_name\>** = uninstalls and deletes all of the K8s components that are inside the chart
+- **helm status \<chart_name\>** = shows info about the status of the chart
+- **helm get all <\chart_name\>** = shows all of the instatiated templates from the deployed chart
+- **helm upgrade \<args\> <\chart_name\>** = upgrades and already deployed chart
+  - **--dry-run** = this argument will print all of the modified YAML files to stdout without applying them
+- **helm history \<chart_name\>** = outputs different revisions of the chart
+- **helm rollback \<chart_name\> \<revision_number\>** = rolls the deployed chart to the specified revision
+- **helm dependency \<args\> \<integration_chart_name\>** = command enables working with dependencies with integration charts
+  - **update** = updates the dependencies in requirements.yaml
+  - **list** = lists the dependencies in the integration chart
