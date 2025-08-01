@@ -1,0 +1,4 @@
+apiVersion: v1
+name: web-server-chart
+version: "1.0"
+description: Simple web server

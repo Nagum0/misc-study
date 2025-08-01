@@ -1,0 +1,24 @@
+version: "3"
+tasks:
+  build:
+    cmds:
+      - task: build:web-server
+
+  build:web-server:
+    cmd: docker build -t web-server:latest ./web-server
+
+  package:
+    cmds:
+      - docker tag web-server:latest bzeki/web-server:latest
+      - docker push bzeki/web-server:latest
+
+  install:
+    cmds:
+      - task: install:mysql
+      - task: install:web-server
+
+  install:mysql:
+    cmd: helm install mysql-db mysql-db/
+
+  install:web-server:
+    cmd: helm install web-server web-server/
