@@ -17,5 +17,19 @@ spec:
       containers:
       - name: web-server-container
         image: bzeki/web-server
+        env:
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-credentials
+              key: mysql-root-password
+        - name: DB_HOST
+          value: "mysql-service"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_NAME
+          value: "default_db"
         ports:
         - containerPort: 8080
