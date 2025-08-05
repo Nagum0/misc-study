@@ -26,6 +26,8 @@ func getExitSignal() chan os.Signal {
 func startWebServer() {
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("/get/albums", getAllAlbums)
+	mux.HandleFunc("/get/album", getAlbum)
 	mux.HandleFunc("/add/album", addAlbumHandler)
 	mux.HandleFunc("/add/review", addReviewHandler)
 

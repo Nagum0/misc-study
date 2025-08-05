@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 )
 
 type Album struct {
@@ -27,4 +28,26 @@ func getDSN() string {
 		config.DBPort,
 		config.DBName,
 	)
+}
+
+func selectAlbumsByArtistAndName(name string, artist string) ([]Album, error) {
+	var albums []Album
+	err = db.Select(&albums, "SELECT * FROM Albums WHERE name = ? AND artist = ?", name, artist)
+	return albums, err
+}
+
+func selectAlbumsByName(name string) ([]Album, error) {
+	var albums []Album
+	err = db.Select(&albums, "SELECT * FROM Albums WHERE name = ?", name)
+	return albums, err
+}
+
+func printAlbums(w io.Writer, albums []Album) {
+	for _, album := range albums {
+		fmt.Fprintf(
+			w,
+			"ID: %v  | NAME: %v  | ARTIST: %v  | RELEASE DATE: %v\n",
+			album.Id, album.Name, album.Artist, album.ReleaseDate,
+		)
+	}
 }
