@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo4-web-server-depl
+  namespace: demo4-namespace
   labels:
     app: demo4-web-server
+    sa: db-access-sa
 spec:
   replicas: 1
   selector:
@@ -14,6 +16,7 @@ spec:
       labels:
         app: demo4-web-server
     spec:
+      serviceAccountName: db-access-sa
       containers:
         - name: demo4-web-server
           image: bzeki/demo4-web-server:2.0

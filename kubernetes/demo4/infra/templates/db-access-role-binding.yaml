@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: db-access-role-binding
+  namespace: demo4-namespace
+subjects:
+- kind: ServiceAccount
+  name: db-access-sa
+  namespace: demo4-namespace
+roleRef:
+  kind: Role
+  name: db-access-role
+  apiGroup: rbac.authorization.k8s.io
