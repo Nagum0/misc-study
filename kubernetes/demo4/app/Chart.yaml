@@ -1,0 +1,4 @@
+apiVersion: v1
+name: Demo4 app integration chart
+version: 1.0.0
+description: A simple integration chart example

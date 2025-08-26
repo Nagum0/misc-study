@@ -1,0 +1,12 @@
+dependencies:
+- name: demo4-client-chart
+  repository: file://../client/
+  version: "1.0"
+- name: demo4-web-server-chart
+  repository: file://../web-server/
+  version: "1.0"
+- name: demo4-db-chart
+  repository: file://../db/
+  version: "1.0"
+digest: sha256:a2e4fd366df8d5d5195adda414d6eb59644e8259223bc9f74c0d62cfc4646769
+generated: "2025-08-26T14:01:09.136029262+02:00"

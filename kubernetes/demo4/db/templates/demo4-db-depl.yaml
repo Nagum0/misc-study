@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo4-db-depl
+  labels:
+    app: demo4-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo4-db
+  template:
+    metadata:
+      labels:
+        app: demo4-db
+    spec:
+      containers:
+        - name: demo4-db
+          image: bzeki/demo4-db:1.0
+          ports:
+            - containerPort: 8081

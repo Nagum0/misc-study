@@ -1,0 +1,10 @@
+dependencies:
+  - name: demo4-client-chart
+    version: "1.0"
+    repository: file://../client/
+  - name: demo4-web-server-chart
+    version: "1.0"
+    repository: file://../web-server/
+  - name: demo4-db-chart
+    version: "1.0"
+    repository: file://../db/

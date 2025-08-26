@@ -1,0 +1,4 @@
+apiVersion: v1
+name: demo4-web-server-chart
+version: "1.0"
+description: Simple web server
