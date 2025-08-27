@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo4-frontend-depl
+  namespace: demo4-app
+  labels:
+    app: demo4-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo4-frontend
+  template:
+    metadata:
+      labels:
+        app: demo4-frontend
+    spec:
+      containers:
+        - name: demo4-frontend
+          image: bzeki/demo4-frontend:0.7
+          ports:
+            - containerPort: 8082

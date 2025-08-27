@@ -1,0 +1,4 @@
+apiVersion: v1
+name: demo4-frontend-chart
+version: "1.0"
+description: Simple frontend

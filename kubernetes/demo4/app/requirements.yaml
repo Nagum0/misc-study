@@ -1,7 +1,7 @@
 dependencies:
-  - name: demo4-client-chart
+  - name: demo4-frontend-chart
     version: "1.0"
-    repository: file://../client/
+    repository: file://../frontend/
   - name: demo4-web-server-chart
     version: "1.0"
     repository: file://../web-server/

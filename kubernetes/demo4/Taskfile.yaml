@@ -1,0 +1,33 @@
+version: "3"
+tasks:
+  # -- BUILD
+  build:
+    cmds:
+      - task: build:frontend
+      - task: build:web-server
+      - task: build:db
+
+  build:frontend:
+    cmd: docker build -t bzeki/demo4-frontend:latest frontend/
+
+  build:web-server:
+    cmd: docker build -t bzeki/demo4-web-server:latest web-server/
+
+  build:db:
+    cmd: docker build -t bzeki/demo4-db:latest db/
+  
+  # -- PUSH
+  push:
+    cmds:
+      - task: push:frontend
+      - task: push:web-server
+      - task: push:db
+
+  push:frontend:
+    cmd: docker push bzeki/demo4-frontend:latest
+
+  push:web-server:
+    cmd: docker push bzeki/demo4-web-server:latest
+
+  push:db:
+    cmd: docker push bzeki/demo4-db:latest

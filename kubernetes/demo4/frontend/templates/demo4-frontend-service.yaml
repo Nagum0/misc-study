@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo4-frontend-service
+  namespace: demo4-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: demo4-frontend
+  ports:
+  - protocol: TCP
+    port: 8082
+    targetPort: 8082
