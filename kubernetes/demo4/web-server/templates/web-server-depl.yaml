@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo4-web-server-depl
-  namespace: demo4-namespace
+  namespace: demo4-app
   labels:
     app: demo4-web-server
     sa: db-access-sa
@@ -15,6 +15,7 @@ spec:
     metadata:
       labels:
         app: demo4-web-server
+        sa: db-access-sa
     spec:
       serviceAccountName: db-access-sa
       containers:

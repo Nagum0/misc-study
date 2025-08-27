@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo4-client-depl
-  namespace: demo4-namespace
+  namespace: demo4-app
   labels:
     app: demo4-client
 spec:

@@ -2,4 +2,4 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: db-access-sa
-  namespace: demo4-namespace
+  namespace: demo4-app

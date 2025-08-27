@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-access-network-policy
+  namespace: demo4-app
+spec:
+  podSelector:
+    matchLabels:
+      app: demo4-db
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            sa: db-access-sa
+      ports:
+        - protocol: TCP
+          port: 8081
+  policyTypes:
+    - Ingress
