@@ -1,0 +1,8 @@
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: demo4-app-istio-mtls
+  namespace: demo4-app
+spec:
+  mtls:
+    mode: STRICT
