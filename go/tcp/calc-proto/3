@@ -1,0 +1,26 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"net"
+	"os"
+	"tcp/utils"
+)
+
+func main() {
+	conn, err := net.Dial("tcp", "localhost:8080")
+	if err != nil {
+		panic(err)
+	}
+	defer conn.Close()
+	
+	calcData := utils.CalcData{
+		A: 42,
+		Op: utils.PLUS,
+		B: 25,
+	}
+	calcDataYaml := calcData.ToYaml()
+	fmt.Fprintf(conn, string(calcDataYaml))
+
+}
